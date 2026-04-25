@@ -1,0 +1,139 @@
+﻿{
+  "nav": {
+    "dashboard": "Dashboard",
+    "upload": "Upload",
+    "results": "Results",
+    "history": "History",
+    "profile": "Profile",
+    "admin": "Admin"
+  },
+  "hero": {
+    "title": "Detect Deepfakes Instantly",
+    "subtitle": "Explainable AI, trusted verification, and enterprise-grade security in one seamless platform.",
+    "cta": "Upload Now"
+  },
+  "features": {
+    "speed": "Lightning inference",
+    "explain": "Explainable insights",
+    "secure": "Secure by design",
+    "multimodal": "Image + video ready"
+  },
+  "auth": {
+    "welcome": "Welcome back",
+    "create": "Create your account",
+    "email": "Email",
+    "password": "Password",
+    "confirm": "Confirm Password",
+    "login": "Login",
+    "signup": "Sign Up"
+  },
+  "dashboard": {
+    "headline": "Your Detection Command Center",
+    "subtitle": "Monitor, analyze, and verify media with real-time AI signals.",
+    "brand": "DeepShield AI",
+    "logout": "Logout",
+    "page": {
+      "title": "Deepfake Detection Dashboard",
+      "subtitle": "Trust the media you share with a premium AI guardian built for today's digital risks."
+    },
+    "trustSignals": {
+      "title": "Trust Signals",
+      "items": {
+        "ai": "AI-powered deepfake detection system",
+        "trusted": "Trusted by advanced AI models",
+        "protect": "Protect yourself from digital fraud"
+      }
+    },
+    "mediaVerification": {
+      "title": "Media Verification",
+      "subtitle": "Upload a file to run a DeepShield scan.",
+      "uploadImage": "Upload Image",
+      "uploadVideo": "Upload Video",
+      "selectMode": "Select an upload mode to begin the scan."
+    },
+    "modelDecision": {
+      "title": "How the model decides",
+      "subtitle": "The detector highlights regions that most influenced its decision and blends them into the heatmap.",
+      "items": {
+        "faceBoundary": "Face boundary checks for blending artifacts and edge inconsistencies.",
+        "texture": "Texture analysis looks for unnatural smoothing or repeated patterns.",
+        "lighting": "Lighting coherence compares shadows and specular highlights across the face."
+      }
+    },
+    "insights": {
+      "title": "Shielded Insights",
+      "subtitle": "Results are delivered with confidence scoring to help you make fast, informed decisions."
+    },
+    "toasts": {
+      "predictionComplete": "Prediction complete. Review your result.",
+      "predictionFailed": "Prediction failed. Please try another file."
+    },
+    "sidebar": {
+      "console": "Console",
+      "adminTools": "Admin Tools",
+      "analytics": "Analytics"
+    },
+    "news": {
+      "title": "Live News",
+      "live": "Live",
+      "items": [
+        {
+          "title": "Deepfake scam targets C-suite executives",
+          "summary": "Synthetic voice and video were used to request urgent wire transfers.",
+          "tag": "Fraud Alert"
+        },
+        {
+          "title": "Fake celebrity video spreads across social platforms",
+          "summary": "Manipulated clips reached millions before takedown efforts.",
+          "tag": "Trending"
+        },
+        {
+          "title": "AI-generated fraud drives new compliance mandates",
+          "summary": "Financial regulators are tightening identity verification rules.",
+          "tag": "Policy"
+        },
+        {
+          "title": "Deepfake romance scams surge in 2026",
+          "summary": "Victims report advanced synthetic personas across messaging apps.",
+          "tag": "Investigation"
+        }
+      ]
+    },
+    "uploadBox": {
+      "dragDrop": "Drag and drop your {{mode}}",
+      "supportedFiles": "PNG, JPG, MP4 up to 50MB",
+      "selected": "Selected: {{filename}}",
+      "scanResult": "Scan Result",
+      "scanning": "Scanning...",
+      "confidence": "Confidence",
+      "emptyState": "Upload a file to see prediction results."
+    }
+  },
+  "upload": {
+    "headline": "Drag and drop your media",
+    "sub": "PNG, JPG, MP4 up to 50MB",
+    "cta": "Start Detection"
+  },
+  "results": {
+    "verdict": "Verdict",
+    "confidence": "Confidence",
+    "heatmap": "Heatmap",
+    "real": "Real",
+    "fake": "Fake",
+    "unableToDetermine": "Unable to Determine",
+    "likelyDeepfake": "Likely Deepfake",
+    "likelyAuthentic": "Likely Authentic",
+    "heatmapOverlay": "Heatmap Overlay",
+    "confidenceSplit": "Confidence Split",
+    "rawModelScore": "Raw model score",
+    "trustOverview": "Trust Overview",
+    "highConfidence": "High confidence prediction",
+    "moderateConfidence": "Moderate confidence prediction",
+    "reviewRecommended": "Review recommended before final decision",
+    "trustChecks": {
+      "scoreConsistency": "Prediction score and verdict are internally consistent.",
+      "thresholdCalibration": "Decision threshold is calibrated from validation data.",
+      "modelValidation": "Model is validated on real/fake benchmark splits."
+    }
+  }
+}

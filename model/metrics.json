@@ -1,0 +1,14 @@
+{
+  "updated_at": "2026-04-24T05:44:49.841090+00:00",
+  "accuracy": 71.33,
+  "auc_roc": 77.87,
+  "f1_score": 72.26,
+  "threshold": 0.54,
+  "dataset": {
+    "local_datasets": [
+      "..\\Datasets\\Celeb_V2"
+    ],
+    "hf_dataset": null,
+    "timestamp": "2026-04-24T05:44:08.590041+00:00"
+  }
+}

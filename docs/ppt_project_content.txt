@@ -1,0 +1,476 @@
+TRUElENS AI / DEEPSHIELD AI - PPT CONTENT (COPY-PASTE READY)
+Generated from current repository implementation on 2026-04-25
+
+============================================================
+SLIDE 1: TITLE
+============================================================
+Project Title:
+TrueLens AI (DeepShield AI) - Explainable Deepfake Detection Platform
+
+Subtitle:
+Hybrid AI system for image/video authenticity verification with secure SaaS workflow
+
+Presented by:
+[Your Name / Team Name]
+
+Tagline:
+Trust Every Frame. Verify Every Claim.
+
+
+============================================================
+SLIDE 2: PROBLEM STATEMENT
+============================================================
+- Deepfake and manipulated media are increasingly used in misinformation, fraud, and identity attacks.
+- Manual verification is slow and unreliable for non-experts.
+- Most existing detectors are either:
+  1) difficult to deploy in real-world products,
+  2) not explainable to users,
+  3) weak on unseen manipulations.
+- There is a need for a production-oriented solution that combines detection accuracy, explainability, and practical user workflow.
+
+
+============================================================
+SLIDE 3: PROJECT OBJECTIVES
+============================================================
+Primary objectives of this project:
+- Build an end-to-end deepfake detection platform (frontend + backend + model pipeline).
+- Support both image and video uploads.
+- Return clear detection verdicts with confidence scores.
+- Provide explainability through visual evidence (heatmaps).
+- Add account system, history tracking, and admin analytics for real usage.
+- Keep solution deployable on CPU-first environments.
+
+
+============================================================
+SLIDE 4: SOLUTION OVERVIEW
+============================================================
+DeepShield AI/TrueLens AI provides:
+- AI-powered deepfake analysis API using a hybrid modeling approach.
+- Secure user-facing web app with:
+  - Authentication (signup/login)
+  - Forgot password with OTP flow
+  - Dashboard for image/video verification
+  - Result visualization and user history
+  - Admin analytics panel
+
+High-level pipeline:
+Input media -> Face-aware preprocessing -> Hybrid inference -> Verdict + confidence + heatmap -> Persist result -> User/admin dashboards
+
+
+============================================================
+SLIDE 5: CURRENT SYSTEM ARCHITECTURE
+============================================================
+Current architecture in repository:
+
+1) Frontend layer
+- Next.js 14 + React + TypeScript + Tailwind CSS
+- Responsive SaaS-style UI and i18n support
+
+2) API layer
+- FastAPI backend (DeepShield API v2.0.0)
+- JWT-based authentication and role-based access
+
+3) AI services layer
+- CNN inference (EfficientNet-based model wrapper)
+- Autoencoder anomaly detector
+- Frequency artifact analysis
+- Heatmap generation (GradCAM++)
+
+4) Data/storage layer
+- JSON-based persistent storage currently used by services:
+  - users.json
+  - uploads.json
+- SQLAlchemy models present for DB expansion path
+- Static heatmap files stored under /static/heatmaps
+
+
+============================================================
+SLIDE 6: TECHNOLOGY STACK
+============================================================
+Frontend:
+- Next.js 14
+- React 18
+- TypeScript
+- Tailwind CSS
+- Framer Motion
+- Axios
+- Recharts
+- i18next
+
+Backend/API:
+- FastAPI
+- Uvicorn
+- Pydantic + pydantic-settings
+- python-jose (JWT)
+- passlib + bcrypt
+
+ML/Computer Vision:
+- PyTorch + Torchvision
+- timm (EfficientNet backbones)
+- OpenCV
+- Pillow
+- NumPy
+
+Training/Evaluation:
+- scikit-learn
+- datasets (Hugging Face integration path)
+
+
+============================================================
+SLIDE 7: KEY FEATURES IMPLEMENTED
+============================================================
+User features:
+- Register/Login with token-based session
+- Forgot password via OTP request and OTP reset
+- Upload image or video for authenticity detection
+- Receive verdict (REAL/FAKE/UNKNOWN) with confidence
+- View heatmap for image explanation
+- Track personal prediction history
+
+Admin features:
+- Role-based admin route
+- Analytics endpoint showing counts:
+  - Users
+  - Uploads
+  - Predictions
+
+System features:
+- Startup model preload for lower first-request latency
+- Static serving for generated heatmaps
+- Centralized API client integration in frontend
+
+
+============================================================
+SLIDE 8: AUTHENTICATION & SECURITY FLOW
+============================================================
+Implemented security mechanisms:
+- Password hashing with bcrypt via passlib
+- JWT access token generation with expiry
+- Token verification on protected APIs
+- Role check for admin-only analytics route
+- Account existence masking in forgot-password request flow
+
+Auth endpoints:
+- POST /auth/signup
+- POST /auth/login
+- POST /auth/forgot-password/request
+- POST /auth/forgot-password/reset
+
+Protected endpoints require Bearer token.
+
+
+============================================================
+SLIDE 9: AI MODEL DESIGN (HYBRID)
+============================================================
+The AI service combines three signals:
+1) CNN Deepfake Classifier
+- EfficientNet-family backbone with custom classification head
+- Predicts fake probability from content features
+
+2) Autoencoder Anomaly Detector
+- Reconstruction-error based anomaly scoring
+- High reconstruction error suggests suspicious manipulation artifacts
+
+3) Frequency Artifact Signal
+- FFT-based frequency-domain irregularity indicator
+- Helps detect synthetic generation traces
+
+Fusion strategy:
+- With frequency signal: weighted fusion (CNN + AE + Frequency)
+- If autoencoder weights are unavailable: safe fallback to CNN-only prediction
+- Configurable threshold (read from model/metrics.json when available)
+
+
+============================================================
+SLIDE 10: EXPLAINABILITY APPROACH
+============================================================
+Explainability outputs include:
+- GradCAM++ heatmap overlay for model attention regions (images)
+- Heatmap persisted to /static/heatmaps/{upload_id}.png
+
+Why this matters:
+- Improves user trust in predictions
+- Helps analysts inspect suspicious areas
+- Supports auditability in detection workflows
+
+Note:
+- Video path currently returns structured summary and metadata note; image path includes generated heatmap URL.
+
+
+============================================================
+SLIDE 11: IMAGE & VIDEO INFERENCE WORKFLOW
+============================================================
+Image flow:
+- Receive uploaded image
+- Detect/extract face region (fallback to full image)
+- Run CNN + optional AE + frequency analysis
+- Compute final verdict and confidence
+- Generate and save GradCAM heatmap
+- Save result into upload history
+
+Video flow:
+- Sample frames from video bytes
+- Perform frame-level analysis with CNN
+- Aggregate frame outcomes into video verdict
+- Return confidence, raw score, and analysis note
+
+
+============================================================
+SLIDE 12: API DESIGN (CURRENT)
+============================================================
+Core routes:
+- GET /health
+- POST /predict
+- GET /heatmap/{upload_id}
+- GET /users/me
+- GET /users/history
+- GET /admin/analytics
+
+Prediction response (POST /predict):
+- result
+- verdict
+- confidence
+- confidence_percent
+- raw_score
+- heatmap_url (for image predictions)
+- note
+
+
+============================================================
+SLIDE 13: FRONTEND EXPERIENCE
+============================================================
+User journey in frontend-next:
+1) Landing route redirects to /auth
+2) User logs in or registers
+3) Dashboard provides image/video mode toggle
+4) User uploads file
+5) Result panel shows:
+   - Verdict
+   - Confidence
+   - Raw score
+   - Heatmap (if available)
+   - Model note
+6) Data saved to local storage and backend history
+7) History page lists previous detections
+8) Profile and admin sections support account/analytics usage
+
+UI implementation highlights:
+- Motion-driven interactions
+- Component-based architecture
+- API abstraction in lib/api.ts
+
+
+============================================================
+SLIDE 14: DATA & STORAGE STRATEGY
+============================================================
+Current operational storage:
+- JSON files for rapid local deployment:
+  - backend-api/users.json
+  - backend-api/uploads.json
+
+Supporting storage components:
+- OTP records in backend-api/data/password_reset_otps.json
+- Heatmap files under backend-api/static/heatmaps
+
+Scalability path:
+- SQLAlchemy models and DB session scaffolding already exist
+- Easy migration path to production relational DB for multi-user scaling
+
+
+============================================================
+SLIDE 15: TRAINING PIPELINE
+============================================================
+Training module supports:
+- Local datasets (real/fake folder structures with train/val/test detection)
+- Optional Hugging Face dataset integration
+- CNN training with focal loss and optimizer scheduling
+- Autoencoder training on real-only data and threshold calibration
+- Test evaluation with threshold sweep to maximize F1
+- Artifact saving to /model directory
+
+Main training outputs:
+- model/deepfake_model.pth
+- model/autoencoder_model.pth
+- model/cnn_history.json
+- model/metrics.json
+
+
+============================================================
+SLIDE 16: LATEST MODEL PERFORMANCE (FROM CURRENT FILES)
+============================================================
+Source: model/metrics.json
+Updated at: 2026-04-24T05:44:49.841090+00:00
+Dataset reference: ..\Datasets\Celeb_V2
+
+Recorded metrics:
+- Accuracy: 71.33%
+- AUC-ROC: 77.87%
+- F1 Score: 72.26%
+- Decision Threshold: 0.54
+
+Interpretation:
+- Current model provides moderate real/fake separation.
+- ROC and F1 indicate usable detection capability with room for improvement via larger and more diverse data.
+
+
+============================================================
+SLIDE 17: INNOVATION & DIFFERENTIATORS
+============================================================
+Compared to a basic classifier demo, this project adds:
+- Hybrid scoring (classification + anomaly + frequency signal)
+- Explainable output (heatmap evidence)
+- Full SaaS-like workflow (auth, history, admin analytics)
+- Video-aware handling with frame aggregation
+- Production-oriented API and frontend integration
+- Threshold-driven behavior informed by saved metrics
+
+
+============================================================
+SLIDE 18: CHALLENGES FACED
+============================================================
+Major challenges in this domain:
+- Deepfake patterns evolve quickly and vary by generation method.
+- Data quality and class balance strongly affect generalization.
+- Explainability must be meaningful, not just visual decoration.
+- Need to support CPU-friendly inference without major quality collapse.
+- Integrating ML outputs into secure, usable product workflows adds engineering complexity.
+
+
+============================================================
+SLIDE 19: LIMITATIONS (CURRENT BUILD)
+============================================================
+- Accuracy is still below production-grade high-assurance thresholds.
+- Video explainability is less visual than image explainability in current API return.
+- Current runtime persistence is JSON-based; large-scale concurrency would need full DB-first migration.
+- Model robustness against unseen, newest deepfake generators requires continual retraining.
+- Benchmark reporting in docs is conceptual; production benchmarking needs standardized test suite automation.
+
+
+============================================================
+SLIDE 20: FUTURE ENHANCEMENTS
+============================================================
+Technical roadmap:
+- Improve training dataset diversity and size (multi-source balanced datasets)
+- Add stronger temporal models for video (sequence-based models)
+- Expand explainability for video frames and timeline-level evidence
+- Move fully to relational DB with migrations and stronger audit trails
+- Add queue-based async processing for long video jobs
+- Add model versioning, monitoring, and drift detection
+- Introduce role-based enterprise workflows and report exports
+
+
+============================================================
+SLIDE 21: DEPLOYMENT PLAN
+============================================================
+Current run setup:
+Frontend:
+- cd frontend-next
+- npm install
+- npm run dev
+
+Backend:
+- cd backend-api
+- pip install -r requirements.txt
+- uvicorn app.main:app --reload
+
+Default local URLs:
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:8000
+
+Deployment direction:
+- Containerize backend and frontend
+- Configure environment variables (.env)
+- Host API and static heatmap storage
+- Add secure origin and production CORS policy
+
+
+============================================================
+SLIDE 22: DEMO SCRIPT (FOR PRESENTATION)
+============================================================
+Live demo steps:
+1) Open auth page and login.
+2) Navigate to dashboard.
+3) Upload a test image.
+4) Show returned verdict + confidence.
+5) Display heatmap visualization.
+6) Open history page and verify stored result.
+7) If admin account is available, open admin analytics page.
+
+What to say during demo:
+- "The backend validates token-protected routes before prediction."
+- "The model returns both decision and confidence for transparency."
+- "Heatmap gives visual evidence behind the prediction."
+
+
+============================================================
+SLIDE 23: IMPACT
+============================================================
+Potential real-world use cases:
+- Media verification and newsroom workflows
+- Digital forensics and cyber investigation support
+- Fraud prevention for social platforms and marketplaces
+- Public awareness tools for misinformation defense
+
+Project impact statement:
+This project demonstrates a practical bridge between AI research and deployable trust infrastructure for digital media authenticity.
+
+
+============================================================
+SLIDE 24: CONCLUSION
+============================================================
+Conclusion summary:
+- We built a complete deepfake detection platform, not just a standalone model.
+- The system combines hybrid AI scoring, explainability, and secure product flows.
+- Current metrics show a functional baseline with clear path for improvement.
+- Architecture is ready for iterative upgrades in model quality and production hardening.
+
+Final line:
+TrueLens AI / DeepShield AI is a strong foundation for trustworthy media verification systems.
+
+
+============================================================
+SLIDE 25: THANK YOU / Q&A
+============================================================
+Thank You
+Questions?
+
+Optional closing line:
+"We are open to feedback on model evaluation depth, deployment strategy, and enterprise integration opportunities."
+
+
+============================================================
+APPENDIX A: FILES REFERENCED FOR THIS PPT CONTENT
+============================================================
+- README.md
+- docs/architecture.md
+- docs/api.md
+- docs/datasets.md
+- docs/benchmark.md
+- docs/optimization.md
+- docs/deployment.md
+- docs/usp.md
+- backend-api/app/main.py
+- backend-api/app/api/routes/*.py
+- backend-api/app/services/ai.py
+- backend-api/app/services/storage.py
+- backend-api/app/core/*.py
+- backend-api/models/*.py
+- frontend-next/app/**/*.tsx
+- frontend-next/components/**/*.tsx
+- frontend-next/lib/api.ts
+- model/metrics.json
+
+
+============================================================
+APPENDIX B: SHORT VERSION (IF YOU NEED 10-SLIDE PPT)
+============================================================
+1) Title + Team
+2) Problem + Need
+3) Solution Overview
+4) Architecture
+5) AI Model + Explainability
+6) Product Features (Auth, Predict, History, Admin)
+7) Tech Stack + API
+8) Current Metrics (Accuracy/AUC/F1/Threshold)
+9) Challenges + Limitations
+10) Roadmap + Conclusion

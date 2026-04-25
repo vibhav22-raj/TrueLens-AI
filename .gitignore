@@ -1,0 +1,70 @@
+# OS/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.coverage
+.coverage.*
+htmlcov/
+.venv/
+venv/
+env/
+ENV/
+
+# Node / Next.js
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+
+# Runtime / local DB
+*.db
+*.sqlite
+*.sqlite3
+
+# ML artifacts and large binaries
+*.pth
+*.pt
+*.h5
+*.onnx
+*.ckpt
+*.pkl
+*.joblib
+*.npy
+*.npz
+
+# Large dataset and generated media folders
+Datasets/
+data/
+database/
+backend-api/static/heatmaps/
+backend-api/uploads/
+uploads/
+
+# Optional local model outputs
+model/*.pth
+model/*.pt
